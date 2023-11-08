@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="./static/styles.css"/>
+    </head>
+    <body>
+        <div id="div_input_text">
+            <textarea name="input_code" cols="104" rows="60"></textarea>
+            <input type="hidden" name="input_code" value="{{.inputCode}}" col>
+        </div>
+        <div id="div_buttons">
+            <form action="/home" method="post">
+                <input id="btn_execute" type="submit" value="Executer le code">
+            </form>
+        </div>
+    </body>
+</html>
