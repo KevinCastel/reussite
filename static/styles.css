@@ -1,0 +1,30 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+#input_code {
+    height: 100%; /* Rétablir la hauteur automatique */
+    color: brown;
+    width: 98%;
+    margin-left: 0.8%;
+    min-height: 100%;
+}
+
+#div_buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+#btn_execute {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#div_input_text{
+    height: 50%;
+    margin-top: 1.15%;
+}
