@@ -113,6 +113,16 @@ li {
     width: 100%;
     background-color: black;
     color : white;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none;
 }
 
 
@@ -171,6 +181,9 @@ li .btn_exercices {
     width:inherit;
 }
 
+.btn_exercices:hover {
+    background-color: #101123;
+}
 
 
 .btn_tools {
@@ -200,4 +213,8 @@ li .btn_exercices {
     user-select: none;
     -webkit-user-select: none;
     vertical-align: middle;
+}
+
+.btn_tools:hover{
+    background-color: #0F0F0F;
 }
