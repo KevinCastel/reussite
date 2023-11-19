@@ -1,30 +1,119 @@
-body, html {
-    height: 100%;
+body, head, header {
+    position: relative;
+    margin: 0%;
+}
+
+* {
     margin: 0;
-    overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#input_code {
-    height: 100%; /* Rétablir la hauteur automatique */
-    color: brown;
-    width: 98%;
-    margin-left: 0.8%;
-    min-height: 100%;
+header {
+    height: 10%;
 }
 
-#div_buttons {
+body {
+    height: inherit;
+}
+
+html {
+    height: 100%;
+}
+
+main {
+    height: fit-content;
+}
+
+textarea {
+    resize: none;
+}
+
+ul {
+    list-style-type: none;
+    width: 110%;
+}
+
+li {
+    width: 100%;
+}
+
+#div_header {
+    background-color:black;
+    height:100%;
+    width:100%;
+}
+
+#div_code {
+    height: 100%;
+    width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 0.6;
 }
 
-#btn_execute {
+#div_exercices {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    width: inherit;
+    height: 100%;
 }
 
-#div_input_text{
+#div_textarea_code {
+    width: 100%;
+    height: 100%;
+}
+
+#div_tools{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top:0.4%
+}
+
+#label_title_home {
+    color:gray;
+    font-size: 4rem;
+}
+
+
+#list_exercice {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+}
+
+
+#section_code {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 50%;
-    margin-top: 1.15%;
+    width: 100%;
+}
+
+#section_terminal{
+    height: 10rem;
+    width: 98.8%;
+    margin-top: 2%;
+    margin-left: 0.6%;
+}
+
+
+#textarea_terminal {
+    height: 100%;
+    width: 100%;
+}
+
+
+#textarea_code {
+    width: 100%;
+    height: 42rem;
+}
+
+
+.btn_exercices {
+    width:inherit;
 }
