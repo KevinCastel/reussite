@@ -2,17 +2,85 @@
 <html>
     <head>
         <title>Home</title>
-        <link rel="stylesheet" href="./static/styles.css"/>
+        <link href="/static/styles.css" rel="stylesheet">
     </head>
     <body>
-        <div id="div_input_text">
-            <textarea name="input_code" cols="104" rows="60"></textarea>
-            <input type="hidden" name="input_code" value="{{.inputCode}}" col>
-        </div>
-        <div id="div_buttons">
-            <form action="/home" method="post">
-                <input id="btn_execute" type="submit" value="Executer le code">
-            </form>
-        </div>
+        <header>
+            <div id="div_header" >
+                <label id="label_title_home">Reussite</label>
+            </div>
+        </header>
+        <main>
+            <div id="div_code">
+                <div id="div_exercices">
+                    <section id="list_exercice">
+                        <ul>
+                            <div><h1>Exercices</h1></div>
+                            <li name="button1">
+                                <button class="btn_exercices">button1</button>
+                            </li>
+                            <li name="button2">
+                                <button class="btn_exercices">
+                                    button2
+                                </button>
+                            </li>
+                            <li name="button">
+                                <button class="btn_exercices">
+                                    button3
+                                </button>
+                            </li>
+                        </ul>
+                    </section>                
+                    <div id="div_tools">
+                        <div>
+                            <button name="btn_execute">Execute</button>
+                            <input type="hidden" value="{{.Value}}">
+                        </div>
+                        <div>
+                            <button name="btn_clear">Effacer</button>
+                            <input type="hidden" value="{{.Value}}">
+                        </div>
+                    </div>    
+                </div>
+                <section id="section_code">
+                    <div id="div_textarea_code">
+                        <textarea id="textarea_code" cols="104" rows="20"></textarea>
+                        <script>
+                            document.getElementById('textarea_code').addEventListener('keydown', function(e) {
+                            if (e.key == 'Tab') {
+                                e.preventDefault();
+                                var start = this.selectionStart;
+                                var end = this.selectionEnd;
+
+                                // set textarea value to: text before caret + tab + text after caret
+                                this.value = this.value.substring(0, start) +
+                                "\t" + this.value.substring(end);
+
+                                // put caret at right position again
+                                this.selectionStart =
+                                this.selectionEnd = start + 1;
+                            }
+                        });
+                        </script>
+                    </div>
+                </section>    
+            </div>
+            <section id="section_terminal">
+                <textarea id="textarea_terminal" cols="20" rows="4"></textarea>
+                <script>
+                    document.GetElementById("textarea_terminal").addEventListener("keydown", function(e){
+                        e.preventDefault();
+                        if (e.key == 'Tab'){
+                            var start = this.selectionStart;
+                            var end = this.selectionEnd;
+                            this.value = this.value.substring(0, start) +
+                            "\t" + this.value.substring(end);
+                            this.selectionStart =
+                            this.selectionEnd = start+1;
+                        }
+                    });
+                </script>
+            </section>
+        </main>
     </body>
 </html>
