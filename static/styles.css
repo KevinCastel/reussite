@@ -39,6 +39,7 @@ ul {
 
 li {
     width: 100%;
+    margin-top: 0.4rem;
 }
 
 #div_header {
@@ -110,17 +111,29 @@ li {
 #textarea_terminal {
     height: 100%;
     width: 100%;
+    background-color: black;
+    color : white;
 }
 
 
 #textarea_code {
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none;
+
+    border: none;
     width: 100%;
     margin-top: 2%;
     height: inherit;
     background-color: #101123;
-}
-
-div_tool .{
+    font-size: 1.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
@@ -158,46 +171,33 @@ li .btn_exercices {
     width:inherit;
 }
 
-/*
-<!-- HTML !-->
-<button class="button-20" role="button">Button 20</button>
 
-/* CSS */
-.button-20 {
-  }
-  
-  .button-20:focus:not(:focus-visible),
-  .button-20:focus {
-    outline: 0;
-  }
-  
-  .button-20:hover {
-    background-color: #3733E5;
-    border-color: #3733E5;
-  }
-  
-  .button-20:focus {
-    background-color: #413FC5;
-    border-color: #3E3BBA;
-    box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
-  }
-  
-  .button-20:active {
-    background-color: #3E3BBA;
-    background-image: none;
-    border-color: #3A38AE;
-    box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
-  }
-  
-  .button-20:active:focus {
-    box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
-  }
-  
-  .button-20:disabled {
-    background-image: none;
-    box-shadow: none;
-    opacity: .65;
-    pointer-events: none;
-  }
-*/
 
+.btn_tools {
+    align-items: center;
+    background-color: #0A66C2;
+    border: 0;
+    border-radius: 100px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 20px;
+    max-width: 480px;
+    min-height: 40px;
+    min-width: 0px;
+    overflow: hidden;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    touch-action: manipulation;
+    transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+}
