@@ -28,24 +28,46 @@ func GetExercices() {
 	arrayLink := GetExercicesLink(body)
 
 	for _, link := range arrayLink {
-		resp, err := http.Get(link)
-
+		link = strings.ReplaceAll(strings.TrimSpace(link), "tree/", "")
+		link = strings.ReplaceAll(link, "public/", "public/blob/")
+		resp, err := http.Get(link + "/README.md?plain=1")
 		if err == nil {
 
 			defer resp.Body.Close()
 
-			fmt.Println("link :", link)
-
 			if strings.HasSuffix(link, "displayfirstparam") {
-				_, err := io.ReadAll(resp.Body)
+				fmt.Println("ouverture du lien :\"", link+"/README.md?plain=1\"")
+				bodyExercice, err := io.ReadAll(resp.Body)
 				if err != nil {
 					fmt.Println("Impossible de lire le contenu de la page :", err)
 					os.Exit(1)
 				}
+				reactAppNode := GetChildrensByTagName("react-app", string(bodyExercice))
+				scriptNode := GetChildrensByTagName("script", reactAppNode)
+
+				GetExercicesData(scriptNode)
+
+				//WriteLog(string(scriptNode))
 			}
 		}
 
 	}
+}
+
+func GetExercicesData(content string) []string {
+	pattern := `(\"blob\"\:)\{(\"[\w|]*\":)\[(?P<content>[^]]*)`
+	regexObj, _ := regexp.Compile(pattern)
+	match := regexObj.FindStringSubmatch(content)
+	mIndex := regexObj.SubexpIndex("content")
+	result := make([]string, 0)
+
+	for _, e := range strings.Split(match[mIndex], ",") {
+		if len(strings.TrimSpace(e)) > 2 && !strings.HasPrefix(e, "\"```") {
+			result = append(result, e)
+		}
+	}
+	fmt.Println("result:", result)
+	return make([]string, 0)
 }
 
 /*
@@ -54,55 +76,77 @@ Iterate body and get all sub link for accessing to the exercices
 func GetExercicesLink(bodyBuff []byte) []string {
 	arrayLinks := make([]string, 0)
 
-	WriteLog(string(bodyBuff))
+	//WriteLog(string(bodyBuff))
 	body := strings.Split(string(bodyBuff), "\n")
 	var lineFormatted string
 	for _, line := range body {
 		lineFormatted = strings.TrimSpace(line)
 		if strings.HasPrefix(lineFormatted, "<li>") {
-
 			regexObj, _ := regexp.Compile(`<li>\(\d*\)\s*<a\s*href="(?P<link>[^"]*)">.*<\/a>`)
 			match := regexObj.FindStringSubmatch(lineFormatted)
 			indexMatch := regexObj.SubexpIndex("link")
+
 			if len(match) != 0 {
 				arrayLinks = append(arrayLinks, match[indexMatch])
 			}
 
-			arrayLinks = append(arrayLinks, lineFormatted)
 		}
 	}
 
 	return arrayLinks
 }
 
-/*
-Called for getting childrens elements as string
-"Box-sc-g0xbh4-0 bJMeLZ js-snippet-clipboard-copy-unpositioned"
-*/
-func GetChildrensElementsByClass(parentElementClassName, body string) []string {
-	for _, line := range strings.Split(body, "\n") {
-		regexObj, _ := regexp.Compile(`(.*)(div class=)(?P<class_name>\"Box-sc-g0xbh4-0 bJMeLZ js-snippet-clipboard-copy-unpositioned")(.*)`)
-		match := regexObj.FindStringSubmatch(line)
-		index := regexObj.SubexpIndex("class_name")
-		result := match[index]
-		fmt.Println("result:", result)
+func GetChildrendsById(id, body string) string {
+	body = strings.TrimSpace(strings.ReplaceAll(body, "\n", ""))
 
+	var result string
+
+	//regexObj, _ := regexp.Compile(`(.*)(\<react-app)(?P<tag_childrens>.*)(\</react-app>)(.*)`)
+	regexObj, _ := regexp.Compile(`(.*)(\<` + id + `)(?P<tag_childrens>.*)(\</` + id + `>)(.*)`)
+	match := regexObj.FindStringSubmatch(body)
+	index := regexObj.SubexpIndex("tag_childrens")
+	if len(match) != 0 {
+		result = match[index]
 	}
 
-	return make([]string, 0)
+	return result
+
+}
+
+/*
+Called for getting childrens elements as string
+Take args as:
+
+	tagName string is the tagname
+	body string is the web page
+*/
+func GetChildrensByTagName(tagName string, body string) string {
+	body = strings.TrimSpace(strings.ReplaceAll(body, "\n", ""))
+
+	var result string
+
+	//regexObj, _ := regexp.Compile(`(.*)(\<react-app)(?P<tag_childrens>.*)(\</react-app>)(.*)`)
+	regexObj, _ := regexp.Compile(`(.*)(\<` + tagName + `)(?P<tag_childrens>.*)(\</` + tagName + `>)(.*)`)
+	match := regexObj.FindStringSubmatch(body)
+	index := regexObj.SubexpIndex("tag_childrens")
+	if len(match) != 0 {
+		result = match[index]
+	}
+
+	return result
 }
 
 /*
 Called for writing logs
 */
 func WriteLog(content string) {
-
 	filePath, errPath := os.Getwd()
 	if errPath != nil {
 		fmt.Println("Une erreur est survenue pour la récupération du chemin :", errPath)
 	}
 
 	err := os.WriteFile(filePath+"/webpage.html", []byte(content), 0777)
+
 	if err != nil {
 		fmt.Println("L'écriture est impossible :", err)
 	}
