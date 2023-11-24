@@ -11,6 +11,7 @@ import (
 
 const URL string = "https://github.com/01-edu/public/projects?type=classic"
 
+// Called for getting the exercices datas
 func GetExercices() {
 	resp, err := http.Get(URL)
 	if err != nil {
@@ -45,15 +46,16 @@ func GetExercices() {
 				reactAppNode := GetChildrensByTagName("react-app", string(bodyExercice))
 				scriptNode := GetChildrensByTagName("script", reactAppNode)
 
-				GetExercicesData(scriptNode)
+				arrayTxt := GetExercicesData(scriptNode)
+				FormatExercices(arrayTxt)
 
-				//WriteLog(string(scriptNode))
 			}
 		}
-
 	}
 }
 
+// Called for getting exercices informations in an array of strings so get
+// rule and output
 func GetExercicesData(content string) []string {
 	pattern := `(\"blob\"\:)\{(\"[\w|]*\":)\[(?P<content>[^]]*)`
 	regexObj, _ := regexp.Compile(pattern)
@@ -66,8 +68,7 @@ func GetExercicesData(content string) []string {
 			result = append(result, e)
 		}
 	}
-	fmt.Println("result:", result)
-	return make([]string, 0)
+	return result
 }
 
 /*
@@ -96,6 +97,9 @@ func GetExercicesLink(bodyBuff []byte) []string {
 	return arrayLinks
 }
 
+/*
+Called for getting all childrens of an parent by his id
+*/
 func GetChildrendsById(id, body string) string {
 	body = strings.TrimSpace(strings.ReplaceAll(body, "\n", ""))
 
@@ -114,7 +118,7 @@ func GetChildrendsById(id, body string) string {
 }
 
 /*
-Called for getting childrens elements as string
+Called for getting childrens elements as string by the tag name
 Take args as:
 
 	tagName string is the tagname
