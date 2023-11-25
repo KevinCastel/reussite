@@ -47,7 +47,11 @@ func GetExercices() {
 				scriptNode := GetChildrensByTagName("script", reactAppNode)
 
 				arrayTxt := GetExercicesData(scriptNode)
-				FormatExercices(arrayTxt)
+
+				arrayTxt = FormatExercices(arrayTxt, link)
+				for _, e := range arrayTxt {
+					fmt.Println("e:", e)
+				}
 
 			}
 		}
@@ -74,7 +78,7 @@ func GetExercicesData(content string) []string {
 /*
 Iterate body and get all sub link for accessing to the exercices
 */
-func GetExercicesLink(bodyBuff []byte) []string {
+func GetExercicesLink(bodyBuff []byte) StringSlice {
 	arrayLinks := make([]string, 0)
 
 	//WriteLog(string(bodyBuff))
@@ -89,6 +93,7 @@ func GetExercicesLink(bodyBuff []byte) []string {
 
 			if len(match) != 0 {
 				arrayLinks = append(arrayLinks, match[indexMatch])
+				//fmt.Println(arrayLinks)
 			}
 
 		}
